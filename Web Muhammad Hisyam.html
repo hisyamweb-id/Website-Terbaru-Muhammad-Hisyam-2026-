@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hisyam Portofolio - Premium Photography & Visual Storytelling Portfolio.">
+    <title>Muhammad Hisyam | Visual Photography</title>
+    
+    <!-- Fonts: Cormorant Garamond (Serif) & Inter (Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --bg-color: #F4F4F1;
+            --text-main: #171717;
+            --text-muted: #666666;
+            --accent: #202020;
+            --surface: #FFFFFF;
+            --border-color: rgba(0, 0, 0, 0.12);
+            --overlay: rgba(244, 244, 241, 0.9);
+            
+            /* Typography */
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing & Layout */
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 5rem;
+            --spacing-xl: 10rem;
+            --container-width: 1400px;
+            
+            /* Transitions */
+            --trans-fast: 0.3s ease;
+            --trans-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111111;
+            --text-main: #F4F4F1;
+            --text-muted: #999999;
+            --accent: #E0E0E0;
+            --surface: #1A1A1A;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --overlay: rgba(17, 17, 17, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--trans-fast), color var(--trans-fast);
+            cursor: none;
+        }
+
+        /* Responsive Typography */
+        h1, h2, h3, h4, .font-serif {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+        h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+        
+        p { font-size: 1rem; color: var(--text-muted); font-weight: 300; }
+        
+        .label {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        a { color: inherit; text-decoration: none; transition: opacity var(--trans-fast); }
+        a:hover { opacity: 0.7; }
+
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+        
+        section { padding: var(--spacing-xl) 5%; }
+        .container { max-width: var(--container-width); margin: 0 auto; }
+
+        /* --- Custom Cursor --- */
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 12px; height: 12px;
+            background-color: var(--text-main);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, mix-blend-mode 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; color: var(--bg-color); font-weight: 600; opacity: 0;
+        }
+        
+        body:hover #custom-cursor { opacity: 1; }
+        
+        #custom-cursor.hover-link {
+            width: 40px; height: 40px;
+            background-color: transparent;
+            border: 1px solid var(--text-main);
+            mix-blend-mode: difference;
+        }
+        
+        #custom-cursor.hover-image {
+            width: 80px; height: 80px;
+            background-color: var(--text-main);
+            mix-blend-mode: normal;
+        }
+        
+        #custom-cursor.hover-image::after {
+            content: 'VIEW';
+        }
+
+        /* --- Loading Screen --- */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-color);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #loader h2 { margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.1em; }
+        .progress-bar { width: 200px; height: 1px; background: var(--border-color); position: relative; overflow: hidden; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--text-main); width: 0%; transition: width 0.1s; }
+
+        /* --- Header & Nav --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            transition: padding var(--trans-fast), background-color var(--trans-fast), backdrop-filter var(--trans-fast);
+        }
+        
+        header.scrolled {
+            padding: 1rem 5%;
+            background-color: rgba(var(--bg-color-rgb), 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; z-index: 1001;}
+        
+        .header-controls { display: flex; align-items: center; gap: 2rem; z-index: 1001; }
+        
+        .theme-toggle, .menu-toggle {
+            background: none; border: none; color: inherit; font-family: inherit; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.1em; cursor: none;
+        }
+
+        /* Fullscreen Menu */
+        #nav-overlay {
+            position: fixed; inset: 0;
+            background-color: var(--bg-color);
+            z-index: 999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity var(--trans-slow);
+        }
+        
+        #nav-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .nav-links { list-style: none; text-align: center; }
+        .nav-links li { margin: 1.5rem 0; overflow: hidden; }
+        .nav-links a {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            display: inline-block;
+            transform: translateY(100%);
+            transition: transform var(--trans-slow);
+        }
+        #nav-overlay.active .nav-links a { transform: translateY(0); }
+        .nav-links a:hover { font-style: italic; color: var(--text-muted); }
+
+        /* --- SPA Page Container --- */
+        .page {
+            display: none;
+            animation: fadeIn var(--trans-slow);
+        }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Hero Section --- */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 15vh; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .hero-content { display: flex; flex-direction: column; gap: 1.5rem; }
+        .hero-content h1 span { display: block; overflow: hidden; }
+        .hero-content h1 span i { display: inline-block; font-style: normal; transform: translateY(100%); transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .hero.loaded .hero-content h1 span i { transform: translateY(0); }
+        
+        .hero-image-wrapper { position: relative; overflow: hidden; aspect-ratio: 4/5; }
+        .hero-image-wrapper img { width: 100%; height: 100%; transform: scale(1.1); transition: transform 2s ease-out; }
+        .hero.loaded .hero-image-wrapper img { transform: scale(1); }
+        
+        .hero-decor { position: absolute; right: -2rem; bottom: 10%; transform: rotate(-90deg); transform-origin: right bottom; display: flex; align-items: center; gap: 1rem; }
+        .hero-decor::before { content: ''; display: block; width: 50px; height: 1px; background: var(--text-main); }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block; padding: 1rem 2rem; border: 1px solid var(--text-main);
+            font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 0.1em; position: relative; overflow: hidden; cursor: none;
+        }
+        .btn::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0%;
+            background-color: var(--text-main); transition: height var(--trans-fast); z-index: -1;
+        }
+        .btn:hover::after { height: 100%; }
+        .btn:hover { color: var(--bg-color); }
+        .btn-primary { background: var(--text-main); color: var(--bg-color); }
+        .btn-primary::after { background-color: var(--bg-color); }
+        .btn-primary:hover { color: var(--text-main); }
+
+        /* --- Section Headers --- */
+        .section-header { margin-bottom: 4rem; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem;}
+        .section-header p { max-width: 400px; }
+
+        /* --- Dark Section --- */
+        .dark-section { background-color: #111; color: #f4f4f1; }
+        .dark-section .section-header { border-color: rgba(255,255,255,0.1); }
+        .dark-section p, .dark-section .label { color: #999; }
+
+        /* --- Editorial Gallery (Home) --- */
+        .horizontal-gallery { display: flex; gap: 2rem; overflow-x: auto; padding-bottom: 2rem; scrollbar-width: none; }
+        .horizontal-gallery::-webkit-scrollbar { display: none; }
+        .gallery-item { flex: 0 0 45vw; position: relative; cursor: none; }
+        .gallery-item:nth-child(even) { margin-top: 5rem; } /* Asymmetric */
+        .gallery-item img { aspect-ratio: 3/4; width: 100%; transition: transform var(--trans-slow); }
+        .gallery-item:hover img { transform: scale(1.03); }
+        .gallery-info { margin-top: 1rem; display: flex; justify-content: space-between; }
+        
+        /* --- Masonry Portfolio Page --- */
+        .portfolio-filter { display: flex; gap: 2rem; margin-bottom: 4rem; flex-wrap: wrap; }
+        .filter-btn { background: none; border: none; font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); cursor: none; transition: color var(--trans-fast); }
+        .filter-btn.active, .filter-btn:hover { color: var(--text-main); font-weight: 500; }
+        
+        .masonry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+        .masonry-item { break-inside: avoid; margin-bottom: 2rem; position: relative; overflow: hidden; cursor: none; }
+        .masonry-item img { width: 100%; display: block; transition: transform var(--trans-slow); }
+        .masonry-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity var(--trans-fast); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; color: #fff; }
+        .masonry-item:hover .masonry-overlay { opacity: 1; }
+        .masonry-item:hover img { transform: scale(1.05); }
+
+        /* --- Lightbox --- */
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--trans-fast); color: white;}
+        #lightbox.active { display: flex; opacity: 1; }
+        #lightbox-img { max-height: 85vh; max-width: 90vw; object-fit: contain; }
+        .lightbox-controls { width: 100%; position: absolute; top: 50%; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 2rem; pointer-events: none; }
+        .lb-btn { pointer-events: auto; background: none; border: none; color: white; font-size: 2rem; cursor: none; font-family: var(--font-heading); }
+        .lightbox-info { position: absolute; bottom: 2rem; left: 2rem; }
+        #lb-close { position: absolute; top: 2rem; right: 2rem; pointer-events: auto; background: none; border: none; color: white; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: none; }
+
+        /* --- About Section --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+        .stat-item h3 { font-size: 4rem; margin-bottom: 0.5rem; font-family: var(--font-body); font-weight: 300;}
+        
+        /* --- Services --- */
+        .service-list { display: flex; flex-direction: column; }
+        .service-item { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 2rem; padding: 3rem 0; border-bottom: 1px solid var(--border-color); align-items: center; }
+        .service-item:first-child { border-top: 1px solid var(--border-color); }
+        .service-item h3 { font-size: 2rem; }
+        .service-price { text-align: right; }
+
+        /* --- Journal --- */
+        .journal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 4rem; }
+        .journal-card img { aspect-ratio: 16/9; margin-bottom: 1.5rem; }
+        .journal-card h3 { margin: 1rem 0; font-size: 2rem; }
+
+        /* --- Contact --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+        .form-group { margin-bottom: 2rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0; color: inherit; font-family: inherit; font-size: 1rem; outline: none;
+            transition: border-color var(--trans-fast);
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--text-main); }
+        
+        /* --- Footer --- */
+        footer { padding: 5rem 5% 2rem; background: var(--bg-color); border-top: 1px solid var(--border-color); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 5rem; }
+        .footer-links { display: flex; flex-direction: column; gap: 1rem; }
+        .footer-bottom { display: flex; justify-content: space-between; padding-top: 2rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted); }
+
+        /* --- Utility & Animations --- */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            h1 { font-size: 5rem; }
+            .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .gallery-item { flex: 0 0 70vw; }
+            .gallery-item:nth-child(even) { margin-top: 0; }
+            .service-item { grid-template-columns: 1fr; gap: 1rem; }
+            .service-price { text-align: left; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            #custom-cursor { display: none !important; }
+            body, .btn, a, button, input { cursor: auto !important; }
+            h1 { font-size: 3.5rem; }
+            header { padding: 1rem 5%; }
+            .nav-links a { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .masonry-grid { grid-template-columns: 1fr; }
+            .journal-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor (Desktop only) -->
+    <div id="custom-cursor"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <h2 id="loader-name">HISYAM PORTOFOLIO</h2>
+        <div class="progress-bar"><div class="progress-fill" id="loader-fill"></div></div>
+        <p class="label" style="margin-top:10px" id="loader-percent">0%</p>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <a href="#home" class="logo" data-link>HISYAM PORTOFOLIO</a>
+        <div class="header-controls">
+            <button class="theme-toggle" id="theme-btn">Dark</button>
+            <button class="menu-toggle" id="menu-btn">Menu</button>
+        </div>
+    </header>
+
+    <!-- Fullscreen Menu Overlay -->
+    <nav id="nav-overlay">
+        <ul class="nav-links">
+            <li><a href="#home" data-link>Home</a></li>
+            <li><a href="#portfolio" data-link>Portfolio</a></li>
+            <li><a href="#about" data-link>About</a></li>
+            <li><a href="#services" data-link>Services</a></li>
+            <li><a href="#journal" data-link>Journal</a></li>
+            <li><a href="#contact" data-link>Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Lightbox for Gallery -->
+    <div id="lightbox">
+        <button id="lb-close">Close [ESC]</button>
+        <div class="lightbox-controls">
+            <button class="lb-btn" id="lb-prev">&larr;</button>
+            <button class="lb-btn" id="lb-next">&rarr;</button>
+        </div>
+        <img id="lightbox-img" src="" alt="Full view" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800';">
+        <div class="lightbox-info">
+            <h3 id="lb-title" class="font-serif">Project Title</h3>
+            <p id="lb-desc" class="label">Category &bull; Location &bull; Year</p>
+        </div>
+    </div>
+
+    <main id="app-content">
+        
+        <!-- PAGE: HOME -->
+        <section id="home-page" class="page active">
+            <div class="hero">
+                <div class="container hero-grid">
+                    <div class="hero-content">
+                        <p class="label">Hello, I'm</p>
+                        <h1>
+                            <span><i>HISYAM</i></span>
+                            <span><i>PORTOFOLIO</i></span>
+                        </h1>
+                        <h3 class="font-serif">Photographer & Visual Storyteller</h3>
+                        <p>Membuat Photography Dan Videography Cinematic Dan Konten Yang Menarik, Travel, Street Photography.</p>
+                        <div style="margin-top: 2rem;">
+                            <a href="#portfolio" class="btn btn-primary" data-link>View My Work</a>
+                        </div>
+                    </div>
+                    <div class="hero-image-wrapper image-hover">
+                        <!-- Image injected via JS config with a fallback if your local file isn't found -->
+                        <img id="hero-img" src="" alt="Hisyam Portofolio Portrait" loading="eager" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1554046920-90dc59f4e7d0?q=80&w=800';">
+                        <div class="hero-decor label">EST. 2022 &bull; INDONESIA</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home: Featured Gallery -->
+            <div class="dark-section" style="padding: 10rem 5%;">
+                <div class="container">
+                    <div class="section-header reveal-up">
+                        <h2>My Captures</h2>
+                        <p>A curated collection of stories, places, and fleeting moments captured through my lens across different continents.</p>
+                    </div>
+                    <div class="horizontal-gallery" id="home-gallery">
+                        <!-- Injected via JS -->
+                    </div>
+                    <div style="text-align: center; margin-top: 5rem;" class="reveal-up">
+                        <a href="#portfolio" class="btn" style="color: white; border-color: white;" data-link>View All Projects</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: PORTFOLIO -->
+        <section id="portfolio-page" class="page">
+            <div class="container" style="padding-top: 15vh;">
+                <div class="section-header reveal-up">
+                    <h1>Selected<br>Works.</h1>
+                    <p>Explore my portfolio across various disciplines including travel, lifestyle, and commercial photography.</p>
+                </div>
+                
+                <div class="portfolio-filter reveal-up" id="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <!-- Filters injected via JS based on data -->
+                </div>
+
+                <div class="masonry-grid" id="portfolio-grid">
+                    <!-- Items injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: ABOUT -->
+        <section id="about-page" class="page">
+            <div class="container" style="padding-top: 15vh;">
+                <div class="about-grid">
+                    <div class="image-hover reveal-up">
+                        <img id="about-img" src="" alt="About Photographer" style="aspect-ratio: 4/5; width: 100%;" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1554046920-90dc59f4e7d0?q=80&w=800';">
+                    </div>
+                    <div class="reveal-up">
+                        <h1>Turning moments into visual stories.</h1>
+                        <p style="margin: 2rem 0; font-size: 1.1rem; color: var(--text-main);">
+                            I am a visual storyteller focusing on travel, lifestyle, portrait, and commercial photography. Based in Indonesia, working globally.
+                        </p>
+                        <p>My approach is rooted in authentic storytelling, capturing cinematic visuals that evoke emotion and connection. Whether working with international brands or intimate personal projects, I strive to find the extraordinary in the ordinary.</p>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <h3 class="counter" data-target="10">0</h3>
+                                <p class="label">Years Exp.</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="counter" data-target="250">0</h3>
+                                <p class="label">Projects</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="counter" data-target="17">0</h3>
+                                <p class="label">Countries</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="counter" data-target="47">0</h3>
+                                <p class="label">Brands</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: SERVICES -->
+        <section id="services-page" class="page">
+            <div class="container" style="padding-top: 15vh;">
+                <div class="section-header reveal-up">
+                    <h1>Services.</h1>
+                    <p>Professional photography services tailored for Pre Wedding, brands, agencies, and individual commissions.</p>
+                </div>
+                <div class="service-list" id="services-list">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: JOURNAL -->
+        <section id="journal-page" class="page">
+            <div class="container" style="padding-top: 15vh;">
+                <div class="section-header reveal-up">
+                    <h1>Journal.</h1>
+                    <p>Thoughts on photography, behind-the-scenes, and visual essays.</p>
+                </div>
+                <div class="journal-grid" id="journal-grid">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONTACT -->
+        <section id="contact-page" class="page">
+            <div class="container" style="padding-top: 15vh;">
+                <div class="contact-grid">
+                    <div class="reveal-up">
+                        <h1>Let's Create<br>Something<br>Meaningful.</h1>
+                        <p style="margin-top: 2rem;">Have a project, collaboration or photography assignment in mind? Fill out the form or reach out directly.</p>
+                        <div style="margin-top: 3rem;">
+                            <p class="label">Email</p>
+                            <a href="#" id="contact-email-link" style="font-size: 1.5rem; display: block; margin-bottom: 1rem;"></a>
+                            <p class="label">Location</p>
+                            <p id="contact-location-text"></p>
+                        </div>
+                    </div>
+                    <div class="reveal-up">
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" placeholder="MUHAMMAD HISYAM" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" placeholder="muhamadhisyam1409@gmail.com" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" placeholder="Project Type / Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" rows="5" placeholder="Beberapa Projek yang mengesankan..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Inquiry</button>
+                        </form>
+                        <div id="form-message" style="margin-top: 1rem; display: none; color: green;" class="label">Message sent successfully!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid reveal-up">
+                <div>
+                    <h2 class="logo" id="footer-logo-name">HISYAM PORTOFOLIO</h2>
+                    <p style="margin-top: 1rem; max-width: 300px;">Photography & Visual Storytelling.</p>
+                </div>
+                <div class="footer-links">
+                    <p class="label">Navigation</p>
+                    <a href="#home" data-link>Home</a>
+                    <a href="#portfolio" data-link>Portfolio</a>
+                    <a href="#about" data-link>About</a>
+                    <a href="#services" data-link>Services</a>
+                </div>
+                <div class="footer-links">
+                    <p class="label">Socials</p>
+                    <div id="footer-socials">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <p class="label">Inquiries</p>
+                    <a href="#contact" data-link>Contact Me</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> <span id="copyright-name"></span>. All Rights Reserved.</p>
+                <a href="#home" data-link>Back to Top &uarr;</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * =======================================================================
+         * MODUL KONFIGURASI PUSAT (Setara dengan js/config.js)
+         * =======================================================================
+         * 
+         * PENTING: Saya telah mengganti nama file Anda dengan URL online
+         * agar Anda bisa melihat kodenya berfungsi SEMPURNA saat ini juga.
+         * 
+         * JIKA ANDA INGIN MENGGUNAKAN FOTO LOKAL ANDA:
+         * Ganti link "https://..." kembali menjadi "poto bunga.jpg" dll.
+         * Pastikan foto Anda berada DITEPAT FOLDER YANG SAMA dengan file HTML ini.
+         */
+        
+        const siteConfig = {
+            brandName: "HISYAM PORTOFOLIO",
+            photographerName: "Muhammad Hisyam",
+            email: "muhamadhisyam1409@gmail.com",
+            location: "Tangerang, Banten, Indonesia",
+            
+            // Ganti nama ini dengan salah satu foto untuk Hero & About
+            images: {
+                hero: "assets/images/foto (1).jpg", 
+                about: "assets/images/foto (2).jpg",
+            },
+
+            socialLinks: {
+                instagram: "https://www.instagram.com/syammmea?stkn=MXUyYmM3eTNtaXo1NQ==",
+                linkedin: "https://linkedin.com/",
+                behance: "https://behance.net/",
+                twitter: "https://jokowidodo.com/"
+            },
+
+            // 1. KOSONGKAN PORTFOLIODATA BAWAAN
+            portfolioData: [],
+
+            servicesData: [
+                { title: "Travel Photography", desc: "Destination-based photography for tourism boards, hotels, and brands.", price: "Starts at $2,000" },
+                { title: "Commercial Photography", desc: "High-end visual assets for campaigns, lookbooks, and brand storytelling.", price: "Starts at $3,500" },
+                { title: "Lifestyle & Portrait", desc: "Editorial style portraits and lifestyle imagery for creatives and professionals.", price: "Starts at $800" },
+                { title: "Visual Direction", desc: "Creative direction and concept building for visual campaigns.", price: "Custom Quote" }
+            ],
+
+            journalData: [
+                { title: "How I Capture Cinematic Travel Photography", category: "Tutorial", date: "Sep 07, 2026", image: "assets/images/foto (3).jpg" },
+                { title: "The Art of Finding Light", category: "Musings", date: "Aug 15, 2026", image: "assets/images/foto (4).jpg" },
+                { title: "Behind The Lens: Java Exploration", category: "Behind the Scenes", date: "Jul 22, 2026", image: "assets/images/foto (5).jpg" }
+            ]
+        };
+
+        // ====================================================================
+        // 2. SKRIP OTOMATIS: GENERATOR PORTFOLIO
+        // ====================================================================
+        const totalFoto = 24 ; // UBAH ANGKA INI SESUAI JUMLAH FOTO ANDA DI FOLDER
+        
+        for (let i = 1; i <= totalFoto; i++) {
+            siteConfig.portfolioData.push({
+                id: i,
+                title: "Cinematic Capture " + i, // Judul otomatis
+                category: "Gallery",
+                location: "Indonesia",
+                year: "2026",
+                image: `assets/images/foto (${i}).jpg`, // Memanggil urutan nama file Windows
+                featured: true
+            });
+        }
+        // ====================================================================
+
+        // (Lanjutkan dengan kode document.addEventListener('DOMContentLoaded'... dst yang sudah ada di file Anda)
+        /**
+         * =======================================================================
+         * MODUL UTAMA & RENDERER 
+         * =======================================================================
+         */
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Populate Config Data ---
+            document.querySelectorAll('.logo').forEach(el => el.textContent = siteConfig.brandName);
+            document.getElementById('loader-name').textContent = siteConfig.brandName;
+            document.getElementById('hero-img').src = siteConfig.images.hero;
+            document.getElementById('about-img').src = siteConfig.images.about;
+            document.getElementById('contact-email-link').textContent = siteConfig.email;
+            document.getElementById('contact-email-link').href = `mailto:${siteConfig.email}`;
+            document.getElementById('contact-location-text').textContent = siteConfig.location;
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('copyright-name').textContent = siteConfig.photographerName;
+
+            // Populate Socials
+            const socialContainer = document.getElementById('footer-socials');
+            for (const [network, url] of Object.entries(siteConfig.socialLinks)) {
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.textContent = network.charAt(0).toUpperCase() + network.slice(1);
+                a.style.display = "block";
+                socialContainer.appendChild(a);
+            }
+
+            // --- 2. Render Dynamic Content ---
+            renderHomeGallery();
+            renderPortfolio();
+            renderServices();
+            renderJournal();
+
+            // --- 3. Initialize Interactions ---
+            initRouting();
+            initCustomCursor();
+            initThemeToggle();
+            initMenuToggle();
+            initAnimations();
+            initContactForm();
+            
+            // --- 4. Loading Screen Logic ---
+            simulateLoading();
+        });
+
+        function renderHomeGallery() {
+            const container = document.getElementById('home-gallery');
+            const featured = siteConfig.portfolioData.filter(item => item.featured);
+            
+            featured.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item image-hover';
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" loading="lazy" class="lb-trigger" data-id="${item.id}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800';">
+                    <div class="gallery-info">
+                        <div>
+                            <h3 class="font-serif">${item.title}</h3>
+                            <p class="label">${item.category}</p>
+                        </div>
+                        <p class="label">${item.year}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderPortfolio(filter = 'all') {
+            const container = document.getElementById('portfolio-grid');
+            const filterContainer = document.getElementById('portfolio-filters');
+            container.innerHTML = '';
+            
+            // Generate Filters dynamically (run once)
+            if(filterContainer.children.length === 1) {
+                const categories = ['all', ...new Set(siteConfig.portfolioData.map(item => item.category.toLowerCase()))];
+                categories.forEach(cat => {
+                    if(cat === 'all') return;
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-btn';
+                    btn.dataset.filter = cat;
+                    btn.textContent = cat;
+                    filterContainer.appendChild(btn);
+                });
+
+                // Filter Click Event
+                filterContainer.addEventListener('click', (e) => {
+                    if(e.target.classList.contains('filter-btn')) {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        renderPortfolio(e.target.dataset.filter);
+                    }
+                });
+            }
+
+            // Filter data
+            const filteredData = filter === 'all' 
+                ? siteConfig.portfolioData 
+                : siteConfig.portfolioData.filter(item => item.category.toLowerCase() === filter);
+
+            // Render Masonry Items
+            filteredData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'masonry-item image-hover reveal-up';
+                // Trigger reveal immediately for dynamically added items
+                setTimeout(() => div.classList.add('is-visible'), 100); 
+                
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" loading="lazy" class="lb-trigger" data-id="${item.id}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800';">
+                    <div class="masonry-overlay pointer-none">
+                        <h3 class="font-serif">${item.title}</h3>
+                        <p class="label" style="color:#ccc;">${item.category} &bull; ${item.location}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            initLightbox(); // Re-bind lightbox triggers
+        }
+
+        function renderServices() {
+            const container = document.getElementById('services-list');
+            siteConfig.servicesData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'service-item reveal-up';
+                div.innerHTML = `
+                    <div class="label">0${index + 1} &mdash;</div>
+                    <div>
+                        <h3 class="font-serif">${item.title}</h3>
+                        <p style="margin-top:0.5rem">${item.desc}</p>
+                    </div>
+                    <div class="service-price label">${item.price}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderJournal() {
+            const container = document.getElementById('journal-grid');
+            siteConfig.journalData.forEach(item => {
+                const article = document.createElement('article');
+                article.className = 'journal-card image-hover reveal-up';
+                article.innerHTML = `
+                    <a href="#journal" style="display:block">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800';">
+                        <p class="label">${item.category} &bull; ${item.date}</p>
+                        <h3 class="font-serif">${item.title}</h3>
+                        <span class="btn" style="padding: 0.5rem 1rem; font-size: 0.7rem;">Read Article</span>
+                    </a>
+                `;
+                container.appendChild(article);
+            });
+        }
+
+        /**
+         * =======================================================================
+         * MODUL NAVIGASI & STATE (Setara dengan js/navigation.js)
+         * =======================================================================
+         */
+
+        function initRouting() {
+            const links = document.querySelectorAll('[data-link]');
+            const pages = document.querySelectorAll('.page');
+            const menuOverlay = document.getElementById('nav-overlay');
+            const menuBtn = document.getElementById('menu-btn');
+
+            function navigate(hash) {
+                const targetId = hash.replace('#', '') + '-page';
+                const targetPage = document.getElementById(targetId);
+                
+                if(targetPage) {
+                    pages.forEach(p => p.classList.remove('active'));
+                    targetPage.classList.add('active');
+                    window.scrollTo(0, 0);
+                    
+                    // Close menu if open
+                    if(menuOverlay.classList.contains('active')) {
+                        menuOverlay.classList.remove('active');
+                        menuBtn.textContent = 'Menu';
+                        document.body.style.overflow = '';
+                    }
+
+                    // Re-trigger animations for the new page
+                    setTimeout(() => {
+                        const reveals = targetPage.querySelectorAll('.reveal-up');
+                        reveals.forEach(el => el.classList.remove('is-visible'));
+                        initAnimations(); // Re-observe
+                    }, 50);
+                }
+            }
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const hash = link.getAttribute('href');
+                    window.history.pushState(null, null, hash);
+                    navigate(hash);
+                });
+            });
+
+            // Handle browser back/forward
+            window.addEventListener('popstate', () => {
+                const hash = window.location.hash || '#home';
+                navigate(hash);
+            });
+
+            // Initial load based on hash
+            if(window.location.hash) {
+                navigate(window.location.hash);
+            }
+        }
+
+        function simulateLoading() {
+            let progress = 0;
+            const loader = document.getElementById('loader');
+            const fill = document.getElementById('loader-fill');
+            const percent = document.getElementById('loader-percent');
+            const hero = document.querySelector('.hero');
+
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 10) + 5;
+                if(progress > 100) progress = 100;
+                
+                fill.style.width = `${progress}%`;
+                percent.textContent = `${progress}%`;
+
+                if(progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        loader.style.visibility = 'hidden';
+                        setTimeout(() => hero.classList.add('loaded'), 300);
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        function initMenuToggle() {
+            const btn = document.getElementById('menu-btn');
+            const overlay = document.getElementById('nav-overlay');
+            
+            btn.addEventListener('click', () => {
+                overlay.classList.toggle('active');
+                if(overlay.classList.contains('active')) {
+                    btn.textContent = 'Close';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    btn.textContent = 'Menu';
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        function initThemeToggle() {
+            const btn = document.getElementById('theme-btn');
+            const html = document.documentElement;
+            
+            // Check local storage
+            const savedTheme = localStorage.getItem('luke_theme') || 'light';
+            html.setAttribute('data-theme', savedTheme);
+            btn.textContent = savedTheme === 'light' ? 'Dark' : 'Light';
+
+            btn.addEventListener('click', () => {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'light' ? 'dark' : 'light';
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('luke_theme', next);
+                btn.textContent = next === 'light' ? 'Dark' : 'Light';
+            });
+        }
+
+        function initCustomCursor() {
+            const cursor = document.getElementById('custom-cursor');
+            
+            // Check if touch device
+            if (window.matchMedia("(pointer: coarse)").matches) {
+                cursor.style.display = 'none';
+                return;
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Hover effects delegation
+            document.body.addEventListener('mouseover', (e) => {
+                const target = e.target;
+                if(target.tagName.toLowerCase() === 'a' || target.tagName.toLowerCase() === 'button' || target.closest('button')) {
+                    cursor.classList.add('hover-link');
+                } else if(target.classList.contains('image-hover') || target.closest('.image-hover')) {
+                    cursor.classList.add('hover-image');
+                }
+            });
+
+            document.body.addEventListener('mouseout', (e) => {
+                cursor.classList.remove('hover-link', 'hover-image');
+            });
+        }
+
+        /**
+         * =======================================================================
+         * MODUL ANIMASI & LIGHTBOX
+         * =======================================================================
+         */
+
+        function initAnimations() {
+            // Sticky Header
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if(window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            });
+
+            // Intersection Observer for Reveal Up
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                        
+                        // Handle counter animation if it's a stats block
+                        if(entry.target.querySelector('.counter')) {
+                            animateCounters(entry.target);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+        }
+
+        function animateCounters(section) {
+            const counters = section.querySelectorAll('.counter');
+            const speed = 200; // lower is slower
+
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                
+                // Add + string if it exists in design intent
+                const suffix = target > 50 ? '+' : '';
+
+                const updateCount = () => {
+                    const inc = target / speed;
+                    if (count < target) {
+                        count += inc;
+                        counter.innerText = Math.ceil(count) + suffix;
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target + suffix;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        let currentLightboxIndex = 0;
+        let lightboxData = [];
+
+        function initLightbox() {
+            const triggers = document.querySelectorAll('.lb-trigger');
+            const lightbox = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            const lbTitle = document.getElementById('lb-title');
+            const lbDesc = document.getElementById('lb-desc');
+            const closeBtn = document.getElementById('lb-close');
+            const nextBtn = document.getElementById('lb-next');
+            const prevBtn = document.getElementById('lb-prev');
+
+            // Collect data based on current view (Home gallery or Portfolio grid)
+            
+            function openLightbox(id) {
+                // Ensure we get data from the full config to avoid missing items when filtered
+                lightboxData = siteConfig.portfolioData; 
+                const index = lightboxData.findIndex(item => item.id == id);
+                if(index === -1) return;
+                
+                currentLightboxIndex = index;
+                updateLightboxContent();
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function updateLightboxContent() {
+                const item = lightboxData[currentLightboxIndex];
+                lbImg.src = item.image;
+                lbTitle.textContent = item.title;
+                lbDesc.innerHTML = `${item.category} &bull; ${item.location} &bull; ${item.year}`;
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            triggers.forEach(trigger => {
+                trigger.removeEventListener('click', trigger._lbHandler); // prevent duplicate bindings
+                trigger._lbHandler = function() { openLightbox(this.dataset.id); };
+                trigger.addEventListener('click', trigger._lbHandler);
+            });
+
+            closeBtn.onclick = closeLightbox;
+            
+            nextBtn.onclick = () => {
+                currentLightboxIndex = (currentLightboxIndex + 1) % lightboxData.length;
+                updateLightboxContent();
+            };
+            
+            prevBtn.onclick = () => {
+                currentLightboxIndex = (currentLightboxIndex - 1 + lightboxData.length) % lightboxData.length;
+                updateLightboxContent();
+            };
+
+            document.addEventListener('keydown', (e) => {
+                if(!lightbox.classList.contains('active')) return;
+                if(e.key === 'Escape') closeLightbox();
+                if(e.key === 'ArrowRight') nextBtn.click();
+                if(e.key === 'ArrowLeft') prevBtn.click();
+            });
+        }
+
+        function initContactForm() {
+            const form = document.getElementById('contact-form');
+            const msg = document.getElementById('form-message');
+
+            if(form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Basic Validation
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+
+                    if(name && email && message) {
+                        // Simulate API call
+                        const btn = form.querySelector('button');
+                        btn.textContent = 'Sending...';
+                        btn.disabled = true;
+
+                        setTimeout(() => {
+                            btn.textContent = 'Send Inquiry';
+                            btn.disabled = false;
+                            form.reset();
+                            msg.style.display = 'block';
+                            setTimeout(() => msg.style.display = 'none', 5000);
+                        }, 1500);
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
